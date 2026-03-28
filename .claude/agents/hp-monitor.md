@@ -27,17 +27,17 @@
 ## 確認チェックリスト
 
 ### 重大バグ（自動修正対象）
-- [ ] 事業紹介.html: showStd()/showSpc() 関数が定義されているか
-- [ ] 採用.html: 数字セクションが存在するか
-- [ ] 採用.html: #positions アンカーのリンク先(id)が存在するか
-- [ ] 協力会社.html: CSS二重定義が解消されているか
+- [ ] service.html: showStd()/showSpc() 関数が定義されているか
+- [ ] recruit.html: 数字セクションが存在するか
+- [ ] recruit.html: #positions アンカーのリンク先(id)が存在するか
+- [ ] partner.html: CSS二重定義が解消されているか
 
 ### 仕様違反（ユーザー確認後に修正）
 - [ ] 全ページ: 英語セクションラベルの残存
-- [ ] トップ/事業紹介/採用/会社概要: JS変数名の不統一
-- [ ] 免振/採用: header__right が空でない
-- [ ] 事業紹介/会社概要: padding-top 使用
-- [ ] 免振/会社概要: CSS残存スタイル（header__tel/header__cta）
+- [ ] index/service/recruit/company: JS変数名の不統一
+- [ ] menshin/recruit: header__right が空でない
+- [ ] service/company: padding-top 使用
+- [ ] menshin/company: CSS残存スタイル（header__tel/header__cta）
 
 ### 新規チェック
 - [ ] HTMLの構文エラー（閉じタグ漏れ等）

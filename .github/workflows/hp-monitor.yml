@@ -22,31 +22,31 @@ jobs:
         run: |
           echo "=== HP Monitor: Checking status.md ==="
 
-          # 1. 採用.html: #positions アンカーリンク切れ修正
-          if grep -q 'scrollTo.*#positions' hp/採用.html; then
-            if ! grep -q 'id="positions"' hp/採用.html; then
-              echo "FIX: 採用.html - #positions アンカー先が無い → 募集要項セクションにid追加"
+          # 1. recruit.html: #positions アンカーリンク切れ修正
+          if grep -q 'scrollTo.*#positions' hp/recruit.html; then
+            if ! grep -q 'id="positions"' hp/recruit.html; then
+              echo "FIX: recruit.html - #positions アンカー先が無い → 募集要項セクションにid追加"
               # 募集要項セクションの開始タグにid="positions"を追加
-              sed -i 's/<section class="positions"/<section class="positions" id="positions"/' hp/採用.html
+              sed -i 's/<section class="positions"/<section class="positions" id="positions"/' hp/recruit.html
               # sectionタグでない場合、div等も試行
-              if ! grep -q 'id="positions"' hp/採用.html; then
-                sed -i '0,/募集要項\|募集職種\|POSITIONS/{s/<section/<section id="positions"/}' hp/採用.html
+              if ! grep -q 'id="positions"' hp/recruit.html; then
+                sed -i '0,/募集要項\|募集職種\|POSITIONS/{s/<section/<section id="positions"/}' hp/recruit.html
               fi
             fi
           fi
 
-          # 2. 協力会社.html: CSS二重定義の検出・報告
-          if grep -c 'UNIFIED HEADER' hp/協力会社.html > /dev/null 2>&1; then
-            UNIFIED_COUNT=$(grep -c 'z-index' hp/協力会社.html || true)
+          # 2. partner.html: CSS二重定義の検出・報告
+          if grep -c 'UNIFIED HEADER' hp/partner.html > /dev/null 2>&1; then
+            UNIFIED_COUNT=$(grep -c 'z-index' hp/partner.html || true)
             if [ "$UNIFIED_COUNT" -gt 3 ]; then
-              echo "WARN: 協力会社.html - CSS二重定義検出（z-index定義が${UNIFIED_COUNT}箇所）"
+              echo "WARN: partner.html - CSS二重定義検出（z-index定義が${UNIFIED_COUNT}箇所）"
             fi
           fi
 
-          # 3. 事業紹介.html: showStd/showSpc 関数定義チェック
-          if grep -q 'showStd\|showSpc' hp/事業紹介.html; then
-            if ! grep -q 'function showStd\|showStd.*=' hp/事業紹介.html; then
-              echo "WARN: 事業紹介.html - showStd() 関数が未定義の可能性"
+          # 3. service.html: showStd/showSpc 関数定義チェック
+          if grep -q 'showStd\|showSpc' hp/service.html; then
+            if ! grep -q 'function showStd\|showStd.*=' hp/service.html; then
+              echo "WARN: service.html - showStd() 関数が未定義の可能性"
             fi
           fi
 

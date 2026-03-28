@@ -25,7 +25,10 @@
       "Bash(git push:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(gh api:*)"
+      "Bash(awk:*)",
+      "Bash(python3:*)",
+      "Bash(awk '/^<head/,/^<\\\\/head/' 'C:/Users/jin-t/tokyokasetsu-hp/hp/事業紹介.html')",
+      "Bash(start:*)"
     ]
   }
 }
