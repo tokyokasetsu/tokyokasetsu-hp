@@ -431,6 +431,9 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
   .g-hd__nav,.g-hd__right{display:none}
   .g-hd__ham{display:block}
   .g-hd,.g-hd__in{height:64px}
+  .header__nav,.header__right{display:none}
+  .header__hamburger{display:block}
+  .header__inner{height:64px}
   .l-nav{top:64px}
   .crest-area{margin-top:64px}
   .card{grid-template-columns:1fr !important;min-height:auto}
@@ -859,6 +862,7 @@ var hdr=document.querySelector(".header");
 window.addEventListener("scroll",function(){hdr.classList.toggle("scrolled",window.scrollY>80)});
 </script>
 <script>
+(function(){
 /* Local nav */
   var lnav=document.getElementById('lnav');
   var caEl=document.getElementById('CA');
