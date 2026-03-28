@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>株式会社東京架設 | すべての現場に、最適な足場を。</title>
+  <meta name="description" content="株式会社東京架設 — 東京都板橋区を拠点に関東一円で足場工事・仮設工事を手がけています。次世代足場から免震足場まで幅広く対応。">
+  <meta property="og:title" content="株式会社東京架設 | すべての現場に、最適な足場を。">
+  <meta property="og:description" content="東京都板橋区を拠点に関東一円で足場工事・仮設工事を手がけています。次世代足場から免震足場まで幅広く対応。">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="株式会社東京架設">
+  <link rel="icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&family=Zen+Old+Mincho:wght@700;900&display=swap" rel="stylesheet">
@@ -751,7 +757,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
     </g>
   </g>
 </svg>
-  <div class="reason__header reveal"><p class="section-label">OUR WORKS</p><h2 class="section-title">私たちの取り組みについて</h2><p class="section-lead"></p></div>
+  <div class="reason__header reveal"><p class="section-label"></p><h2 class="section-title">私たちの取り組みについて</h2><p class="section-lead"></p></div>
   <div class="kuyo-wrap">
 
     <div class="kuyo-rays"></div>
@@ -1008,7 +1014,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 
 <section class="numbers" id="numbers">
   <div class="container">
-    <div class="reveal"><p class="section-label">NUMBERS</p><h2 class="section-title">数字で見る東京架設</h2></div>
+    <div class="reveal"><p class="section-label"></p><h2 class="section-title">数字で見る東京架設</h2></div>
     <div class="numbers__grid reveal">
       <div class="numbers__item"><span class="numbers__value">500<span class="numbers__unit">件+</span></span><span class="numbers__label">累計施工実績</span></div>
       <div class="numbers__item"><span class="numbers__value">15<span class="numbers__unit">年</span></span><span class="numbers__label">業界経験</span></div>
@@ -1019,7 +1025,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 </section>
 
 <section class="section section--light" id="news"><div class="container">
-  <div class="reveal"><p class="section-label" style="color:var(--blue)">NEWS</p><h2 class="section-title" style="color:var(--text-dark)">お知らせ</h2></div>
+  <div class="reveal"><p class="section-label" style="color:var(--blue)"></p><h2 class="section-title" style="color:var(--text-dark)">お知らせ</h2></div>
   <div class="news__list reveal">
     <div class="news__item"><a href="#" class="news__link"><span class="news__date">2026.01.27</span><span class="news__cat">お知らせ</span><span class="news__title-text">ホームページをリニューアルいたしました。</span></a></div>
     <div class="news__item"><a href="#" class="news__link"><span class="news__date">2026.01.06</span><span class="news__cat">お知らせ</span><span class="news__title-text">本年もよろしくお願いいたします。</span></a></div>
@@ -1046,9 +1052,9 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 
 <script>
 // Hamburger
-var hb=document.getElementById('hamburger'),sn=document.getElementById('spNav');
-hb.onclick=function(){hb.classList.toggle('active');sn.classList.toggle('active');document.body.style.overflow=sn.classList.contains('active')?'hidden':''};
-document.querySelectorAll('.sp-nav__link').forEach(function(l){l.onclick=function(){hb.classList.remove('active');sn.classList.remove('active');document.body.style.overflow=''}});
+var hamburger=document.getElementById('hamburger'),spNav=document.getElementById('spNav');
+hamburger.onclick=function(){hamburger.classList.toggle('active');spNav.classList.toggle('active');document.body.style.overflow=spNav.classList.contains('active')?'hidden':''};
+document.querySelectorAll('.sp-nav__link').forEach(function(l){l.onclick=function(){hamburger.classList.remove('active');spNav.classList.remove('active');document.body.style.overflow=''}});
 // Page top
 var pt=document.getElementById('pagetop');
 window.addEventListener('scroll',function(){pt.classList.toggle('visible',window.scrollY>400)});
