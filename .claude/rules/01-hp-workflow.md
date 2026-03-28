@@ -37,3 +37,9 @@ claude
 ## 許可確認ダイアログの対応
 
 - Claude Codeの許可確認ダイアログが出た時は、何を聞かれているかを先に日本語で説明してから、押すべきボタン番号を答えること
+
+## PC-B Git設定
+
+- user.email: jin-tozuka@tokyokasetsu.co.jp
+- user.name: 仁
+- ブランチ: feature/new-pages
