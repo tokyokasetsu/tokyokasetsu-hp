@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>採用情報 | 株式会社東京架設</title>
+  <meta name="description" content="株式会社東京架設の採用情報。足場施工スタッフを正社員募集中。未経験歓迎、充実の待遇で長く働ける環境を整えています。">
+  <meta property="og:title" content="採用情報 | 株式会社東京架設">
+  <meta property="og:description" content="足場施工スタッフを正社員募集中。未経験歓迎、充実の待遇で長く働ける環境を整えています。">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="株式会社東京架設">
+  <link rel="icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&family=Zen+Old+Mincho:wght@700;900&display=swap" rel="stylesheet">
@@ -79,6 +85,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 /* SECTION SHARED */
 .section-label{font-family:var(--font-en);font-size:0.72rem;font-weight:700;letter-spacing:0.25em;color:var(--sky);margin-bottom:12px;display:flex;align-items:center;gap:12px}
 .section-label::before{content:"";width:24px;height:2px;background:var(--sky);border-radius:2px}
+.section-label--dark{color:var(--navy)}.section-label--dark::before{background:var(--navy)}
 .section-title{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;line-height:1.35;margin-bottom:20px;letter-spacing:0.04em;color:var(--rtext)}
 .section-lead{font-size:0.95rem;line-height:2.1;color:var(--rtext-sub)}
 
@@ -308,7 +315,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 <!-- CULTURE / BENEFITS (merged) -->
 <section class="benefits" id="culture">
   <div class="container">
-    <p class="section-label reveal">WORK ENVIRONMENT</p>
+    <p class="section-label reveal"></p>
     <h2 class="section-title reveal reveal-delay-1">働く環境・待遇</h2>
     <p class="section-lead reveal reveal-delay-2">技術を磨きながら長く安心して働ける環境を整えています</p>
     <div class="benefits__grid">
@@ -346,9 +353,22 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
   </div>
 </section>
 
-
+<!-- NUMBERS -->
+<section class="numbers" id="numbers">
   <div class="container">
-    <p class="section-label section-label--dark reveal">POSITIONS</p>
+    <div class="reveal"><h2 class="section-title">数字で見る東京架設</h2></div>
+    <div class="numbers__grid reveal">
+      <div class="numbers__item"><span class="numbers__value" data-target="500">0</span><span class="numbers__unit">件+</span><span class="numbers__label">累計施工実績</span></div>
+      <div class="numbers__item"><span class="numbers__value" data-target="15">0</span><span class="numbers__unit">年</span><span class="numbers__label">業界経験</span></div>
+      <div class="numbers__item"><span class="numbers__value" data-target="30">0</span><span class="numbers__unit">名</span><span class="numbers__label">社員数</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- POSITIONS -->
+<section class="positions" id="positions">
+  <div class="container">
+    <p class="section-label section-label--dark reveal"></p>
     <h2 class="section-title reveal reveal-delay-1">募集職種</h2>
     <p class="section-lead section-lead--sub reveal reveal-delay-2">大手ゼネコン元請け・足場施工スタッフとして正社員募集神奈川県内（横浜・川崎・大和エリア）の現場がメインです</p>
 
@@ -531,7 +551,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 <!-- VOICES -->
 <section class="voices" id="voices">
   <div class="container">
-    <p class="section-label section-label--dark reveal">EMPLOYEE VOICE</p>
+    <p class="section-label section-label--dark reveal"></p>
     <h2 class="section-title reveal reveal-delay-1">社員の声</h2>
     <p class="section-lead section-lead--sub reveal reveal-delay-2">実際に働く仲間たちのリアルな声をお届けします</p>
     <div class="voices__grid">
@@ -628,7 +648,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 <!-- FLOW -->
 <section class="flow" id="flow">
   <div class="container">
-    <p class="section-label section-label--dark reveal">SELECTION FLOW</p>
+    <p class="section-label section-label--dark reveal"></p>
     <h2 class="section-title reveal reveal-delay-1">選考フロー</h2>
     <p class="section-lead section-lead--sub reveal reveal-delay-2">応募から採用まで<strong>面接1回のみ</strong>最短12週間でご連絡します</p>
     <div class="flow__steps">
