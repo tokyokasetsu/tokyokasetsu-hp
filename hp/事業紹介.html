@@ -666,7 +666,8 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
         </g>
       </svg>
     </div>
-  </div>（ホバーで通常足場） -->
+  </div>
+  <!-- 左ゾーン（ホバーで通常足場） -->
   <div class="zone zone--std" id="zoneStd">
     <span class="zone-hint">◀ 通常足場</span>
   </div>
@@ -877,9 +878,39 @@ window.addEventListener("scroll",function(){hdr.classList.toggle("scrolled",wind
     lLinks.forEach(function(a){a.classList.toggle('active',a.dataset.section===cur)});
   },{passive:true});
 
-  /* Show std/spc panels (scroll to target) */
-  function showStd(){var el=document.getElementById('panelStd');if(el)scrollTo({top:el.getBoundingClientRect().top+scrollY-130,behavior:'smooth'})}
-  function showSpc(){var el=document.getElementById('panelSpc');if(el)scrollTo({top:el.getBoundingClientRect().top+scrollY-130,behavior:'smooth'})}
+  /* Crest zone interaction + panel display */
+  var ca=document.getElementById('CA');
+  var cp=document.getElementById('contentPanels');
+  var pStd=document.getElementById('panelStd');
+  var pSpc=document.getElementById('panelSpc');
+
+  function showStd(){
+    ca.classList.add('picked','show-std');
+    ca.classList.remove('show-spc');
+    cp.classList.add('open','bg-std');
+    cp.classList.remove('bg-spc');
+    pStd.classList.add('on');
+    pSpc.classList.remove('on');
+    scrollTo({top:pStd.getBoundingClientRect().top+scrollY-130,behavior:'smooth'});
+  }
+  function showSpc(){
+    ca.classList.add('picked','show-spc');
+    ca.classList.remove('show-std');
+    cp.classList.add('open','bg-spc');
+    cp.classList.remove('bg-std');
+    pSpc.classList.add('on');
+    pStd.classList.remove('on');
+    scrollTo({top:pSpc.getBoundingClientRect().top+scrollY-130,behavior:'smooth'});
+  }
+
+  /* Zone click/hover */
+  var zStd=document.getElementById('zoneStd');
+  var zSpc=document.getElementById('zoneSpc');
+  zStd.addEventListener('mouseenter',function(){ca.classList.add('show-std');ca.classList.remove('show-spc')});
+  zSpc.addEventListener('mouseenter',function(){ca.classList.add('show-spc');ca.classList.remove('show-std')});
+  ca.addEventListener('mouseleave',function(){if(!ca.classList.contains('picked')){ca.classList.remove('show-std','show-spc')}});
+  zStd.addEventListener('click',showStd);
+  zSpc.addEventListener('click',showSpc);
 
   /* Local nav click: std/spc triggers panel */
   lLinks.forEach(function(a){
