@@ -4,8 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>協力会社募集 | 株式会社東京架設</title>
+  <meta name="description" content="株式会社東京架設の協力会社募集ページ。首都圏の足場工事・仮設工事を中心に、ともに現場を支えてくれる協力会社様を募集しています。">
+  <meta property="og:title" content="協力会社募集 | 株式会社東京架設">
+  <meta property="og:description" content="首都圏の足場工事・仮設工事を中心に、ともに現場を支えてくれる協力会社様を募集しています。">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="株式会社東京架設">
+  <link rel="icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@500;700&family=Zen+Old+Mincho:wght@700;900&display=swap" rel="stylesheet">
   <style>
 :root{
   --navy:#152538;--blue:#3088d0;--cyan:#5ad0ec;
@@ -18,18 +25,7 @@ body{font-family:var(--font);font-size:15px;line-height:1.8;color:var(--text);ba
 a{text-decoration:none;color:inherit}
 ul{list-style:none}
 
-/* HEADER */
-.header{position:fixed;top:0;left:0;width:100%;z-index:100;background:rgba(14,26,42,0.93);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.1)}
-.header__inner{max-width:1100px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between}
-.header__logo{display:flex;align-items:center;gap:12px}
-.header__logo img{width:44px;height:44px;object-fit:contain}
-.header__logo-text{font-weight:700;font-size:1rem;color:#fff;letter-spacing:0.08em}
-.header__logo-text small{display:block;font-family:var(--en);font-size:0.58rem;color:rgba(255,255,255,0.5);letter-spacing:0.15em;font-weight:500}
-.header__nav{display:flex;gap:4px}
-.header__nav a{font-size:0.8rem;font-weight:500;color:rgba(255,255,255,0.6);padding:6px 14px;border-radius:4px;transition:color .2s}
-.header__nav a:hover,.header__nav a.current{color:var(--cyan)}
-.header__ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
-.header__ham span{display:block;width:22px;height:2px;background:#fff;border-radius:1px;transition:.3s}
+/* HEADER — see UNIFIED section below */
 
 /* HERO */
 .hero{padding:130px 0 72px;background:var(--navy)}
@@ -83,14 +79,10 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
 .form-btn{padding:14px 48px;border-radius:6px;background:var(--blue);color:#fff;font-family:var(--font);font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:background .2s}
 .form-btn:hover{background:#4aabf5}
 
-/* FOOTER */
-.footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.1);padding:32px 24px;text-align:center}
-.footer p{font-size:.75rem;color:rgba(255,255,255,.4);font-family:var(--en)}
+/* FOOTER — see UNIFIED section below */
 
 /* SP */
 @media(max-width:768px){
-  .header__nav{display:none}
-  .header__ham{display:flex}
   .req-list{grid-template-columns:1fr}
   .form-grid{grid-template-columns:1fr}
   .form-full{grid-column:1}
@@ -172,7 +164,7 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
 
 <section class="hero">
   <div class="hero__inner">
-    <div class="hero__eyebrow">PARTNER RECRUITMENT</div>
+    <div class="hero__eyebrow"></div>
     <h1 class="hero__title">協力会社を募集しています</h1>
     <p class="hero__lead">首都圏の足場工事・仮設工事を中心に、ともに現場を支えてくれる協力会社様を募集しています。規模・経験年数は問いません。まずはお気軽にご相談ください。</p>
   </div>
