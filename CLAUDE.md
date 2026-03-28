@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## リポジトリ情報
+
+- **GitHub**: https://github.com/tokyokasetsu/tokyokasetsu-hp
+- **別PCでの環境構築手順**: `git clone https://github.com/tokyokasetsu/tokyokasetsu-hp.git` → `cd tokyokasetsu-hp` → `claude`
+- **作業日**: 2026-03-28
+
 ## プロジェクト概要
 
 株式会社東京架設（足場・仮設工事 / 東京都板橋区 / 関東一円）のコーポレートサイト。
