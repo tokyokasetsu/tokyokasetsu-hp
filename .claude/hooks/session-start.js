@@ -71,9 +71,120 @@ function getRecentSessions(maxCount) {
   } catch { return []; }
 }
 
+/**
+ * 秘書チャット申し送り処理
+ * status.mdの「## 秘書チャット申し送り」セクションを読み取り、
+ * 違反レポートをlessons-learned/に自動生成し、処理済み項目をstatus.mdから削除する。
+ */
+function processSecretaryHandoff() {
+  const statusPath = path.join(PROJECT_DIR, 'status.md');
+  const status = readFileSafe(statusPath);
+  if (!status) return [];
+
+  // 「## 秘書チャット申し送り」セクションを抽出（CRLF対応）
+  const sectionMatch = status.match(/## 秘書チャット申し送り\r?\n([\s\S]*?)$/);
+  if (!sectionMatch) return [];
+
+  const sectionContent = sectionMatch[1];
+
+  // コメントブロックを除去してから処理
+  const cleanedContent = sectionContent.replace(/<!--[\s\S]*?-->/g, '').trim();
+
+  // 「（現在、申し送り事項はありません）」なら何もしない
+  if (!cleanedContent || cleanedContent.includes('申し送り事項はありません')) return [];
+
+  // 「### 違反: [タイトル]」ブロックを全て抽出（コメント除去済みコンテンツから）
+  const blocks = cleanedContent.split(/(?=###\s*違反:)/).filter(b => b.trim().match(/^###\s*違反:/));
+  if (blocks.length === 0) {
+    // 書式に従わない自由記述がある場合
+    const freeText = cleanedContent;
+    if (freeText && !freeText.startsWith('（')) {
+      const today = getDateString();
+      const fileName = `秘書チャット申し送り-${today}.md`;
+      const filePath = path.join(LESSONS_DIR, fileName);
+      const content = `# 秘書チャット申し送り\n\n**記録日**: ${today}\n**発見者**: 秘書チャット（claude.ai）\n\n---\n\n${freeText}\n`;
+      if (!fs.existsSync(LESSONS_DIR)) fs.mkdirSync(LESSONS_DIR, { recursive: true });
+      fs.writeFileSync(filePath, content);
+      clearHandoffSection(statusPath, status);
+      return [`申し送り（自由記述）→ ${fileName} に自動生成`];
+    }
+    return [];
+  }
+
+  const results = [];
+  const today = getDateString();
+
+  for (const block of blocks) {
+    // タイトル抽出
+    const titleMatch = block.match(/###\s*違反:\s*(.+)/);
+    if (!titleMatch) continue;
+    const title = titleMatch[1].trim();
+
+    // 各フィールド抽出
+    const severity = extractField(block, '深刻度') || '不明';
+    const discoverer = extractField(block, '発見者') || '不明';
+    const whatHappened = extractField(block, '何が起きたか') || '';
+    const whyHappened = extractField(block, 'なぜ起きたか') || '';
+    const correctAction = extractField(block, '正しい行動') || '';
+    const rule = extractField(block, '根拠ルール') || '';
+    const prevention = extractField(block, '再発防止') || '';
+
+    // lessons-learned/にファイル生成
+    const safeName = title.replace(/[/\\:*?"<>|]/g, '_');
+    const fileName = `${safeName}-${today}.md`;
+    const filePath = path.join(LESSONS_DIR, fileName);
+
+    const content = `# ${title}\n\n**記録日**: ${today}\n**発見者**: ${discoverer}\n**深刻度**: ${severity}\n\n---\n\n## 何が起きたか\n\n${whatHappened}\n\n## なぜ起きたか\n\n${whyHappened}\n\n## 正しい行動\n\n${correctAction}\n\n## 根拠ルール\n\n${rule}\n\n## 再発防止\n\n${prevention}\n`;
+
+    if (!fs.existsSync(LESSONS_DIR)) fs.mkdirSync(LESSONS_DIR, { recursive: true });
+    fs.writeFileSync(filePath, content);
+    results.push(`違反「${title}」→ ${fileName} に自動生成`);
+  }
+
+  // 処理済み → status.mdの申し送りセクションをクリア
+  if (results.length > 0) {
+    clearHandoffSection(statusPath, status);
+    // git add & commit
+    try {
+      execSync(`git add "${statusPath}" lessons-learned/`, { cwd: PROJECT_DIR, stdio: 'pipe' });
+      execSync('git commit -m "lessons-learned自動生成: 秘書チャット申し送り処理" --no-verify', { cwd: PROJECT_DIR, stdio: 'pipe' });
+      execSync('git push origin HEAD', { cwd: PROJECT_DIR, stdio: 'pipe' });
+    } catch { /* non-fatal */ }
+  }
+
+  return results;
+}
+
+function extractField(block, label) {
+  const re = new RegExp(`\\*\\*${label}\\*\\*:\\s*(.+)`, 'm');
+  const match = block.match(re);
+  return match ? match[1].trim() : null;
+}
+
+function clearHandoffSection(statusPath, statusContent) {
+  const cleared = statusContent.replace(
+    /(## 秘書チャット申し送り\r?\n)([\s\S]*?)$/,
+    '$1\n<!-- 処理済みの申し送りはlessons-learned/に自動生成されました -->\n\n（現在、申し送り事項はありません）\n'
+  );
+  fs.writeFileSync(statusPath, cleared);
+}
+
+function getDateString() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
 function main() {
   const parts = [];
   const warnings = [];
+
+  // =============================================
+  // 0. 秘書チャット申し送り処理（lessons-learned自動生成）
+  // =============================================
+  const handoffResults = processSecretaryHandoff();
+  if (handoffResults.length > 0) {
+    parts.push(`【0. 秘書チャット申し送り処理】\n${handoffResults.join('\n')}`);
+  }
 
   // =============================================
   // 1. 監視md（最優先・私の行動規範）
