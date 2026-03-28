@@ -40,5 +40,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | `.claude/rules/00-known-issues.md` | 既知の仕様違反一覧（修正指示がある場合のみ対応） |
 | `.claude/rules/01-hp-workflow.md` | Git運用・ファイル構成・作業姿勢・コミット原則 |
 | `.claude/rules/02-claude-code-techniques.md` | Planモード・/rewind・割り込み入力・コンテキストエンジニアリング・CLAUDE.md 5コツ |
-| `.claude/rules/03-dev-tools-and-methods.md` | UIガチャ・パラレルバイブコーディング・MCP連携・SaaS開発フロー・要件定義 |
+| `.claude/rules/03-dev-tools-and-methods.md` | UIガチャ・パラレルバイブコーディング・MCP連携・SaaS開発フロー・AI分業 |
 | `.claude/rules/04-hp-spec.md` | ナビ順序・カラー変数・フォント・header仕様・レイアウト・JS変数名規約 |
+| `.claude/rules/05-skill-design.md` | スキル構造・YAML仕様・2分類・Eval・Description最適化・運用注意 |
+| `.claude/rules/06-requirements-and-design.md` | 要求/要件定義・非機能要件6分類・設計思想・認知負荷 |
