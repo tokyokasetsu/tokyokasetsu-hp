@@ -1,0 +1,87 @@
+name: HP Monitor - Auto Bug Fix
+
+on:
+  push:
+    branches: [feature/new-pages]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/new-pages
+          fetch-depth: 0
+
+      - name: Read status.md and fix bugs
+        run: |
+          echo "=== HP Monitor: Checking status.md ==="
+
+          # 1. 採用.html: #positions アンカーリンク切れ修正
+          if grep -q 'scrollTo.*#positions' hp/採用.html; then
+            if ! grep -q 'id="positions"' hp/採用.html; then
+              echo "FIX: 採用.html - #positions アンカー先が無い → 募集要項セクションにid追加"
+              # 募集要項セクションの開始タグにid="positions"を追加
+              sed -i 's/<section class="positions"/<section class="positions" id="positions"/' hp/採用.html
+              # sectionタグでない場合、div等も試行
+              if ! grep -q 'id="positions"' hp/採用.html; then
+                sed -i '0,/募集要項\|募集職種\|POSITIONS/{s/<section/<section id="positions"/}' hp/採用.html
+              fi
+            fi
+          fi
+
+          # 2. 協力会社.html: CSS二重定義の検出・報告
+          if grep -c 'UNIFIED HEADER' hp/協力会社.html > /dev/null 2>&1; then
+            UNIFIED_COUNT=$(grep -c 'z-index' hp/協力会社.html || true)
+            if [ "$UNIFIED_COUNT" -gt 3 ]; then
+              echo "WARN: 協力会社.html - CSS二重定義検出（z-index定義が${UNIFIED_COUNT}箇所）"
+            fi
+          fi
+
+          # 3. 事業紹介.html: showStd/showSpc 関数定義チェック
+          if grep -q 'showStd\|showSpc' hp/事業紹介.html; then
+            if ! grep -q 'function showStd\|showStd.*=' hp/事業紹介.html; then
+              echo "WARN: 事業紹介.html - showStd() 関数が未定義の可能性"
+            fi
+          fi
+
+          # 4. padding-top 違反チェック（fixed下コンテンツ）
+          for file in hp/*.html; do
+            basename=$(basename "$file")
+            if grep -qE '\.(page-hero|crest-area)\s*\{[^}]*padding-top' "$file" 2>/dev/null; then
+              echo "WARN: $basename - fixed下コンテンツにpadding-top使用（仕様違反）"
+            fi
+          done
+
+          # 5. header__right 非空チェック
+          for file in hp/*.html; do
+            basename=$(basename "$file")
+            if grep -A5 'class="header__right"' "$file" | grep -qE '<(a|button|span|div[^>]+>.*<)'; then
+              echo "WARN: $basename - header__right が空でない（仕様違反）"
+            fi
+          done
+
+          echo "=== HP Monitor: Check complete ==="
+
+      - name: Update status timestamp
+        run: |
+          if [ -f status.md ]; then
+            sed -i "s/^**調査日**.*/\*\*調査日\*\*: $(date -u +%Y-%m-%d) (auto-checked)/" status.md
+          fi
+
+      - name: Commit fixes if any
+        run: |
+          git config user.email "jin-tozuka@tokyokasetsu.co.jp"
+          git config user.name "仁"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "fix(auto): hp-monitor による自動バグ修正"
+            git push origin feature/new-pages
+          fi
