@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **GitHub**: https://github.com/tokyokasetsu/tokyokasetsu-hp
 - **別PCでの環境構築手順**: `git clone https://github.com/tokyokasetsu/tokyokasetsu-hp.git` → `cd tokyokasetsu-hp` → `claude`
 - **作業日**: 2026-03-28
+- **ブランチ運用**: 作業ブランチは `master`、GitHub のデフォルトは `main`
 
 ## プロジェクト概要
 
@@ -103,3 +104,41 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - クラス命名が独自体系（`.header__ham`, `.header__nav a` 等）
 - CSS 変数が簡略版（--navy-deep, --blue-bright, --cyan-light 等が未定義）
 - sp-nav 未実装（ハンバーガー動作なし）
+
+## 開発ワークフロー
+
+### Git 運用
+
+- リモート: `origin` → `https://github.com/tokyokasetsu/tokyokasetsu-hp.git`
+- 作業ブランチ: `master`
+- コミットメッセージは日本語で簡潔に記述
+- コミット＆プッシュはユーザーが明示的に指示したときのみ実行
+
+### 別PCでの作業開始手順
+
+```bash
+git clone https://github.com/tokyokasetsu/tokyokasetsu-hp.git
+cd tokyokasetsu-hp
+claude
+```
+
+### ファイル構成ルール
+
+- 全HTMLは `hp/` フォルダ内に配置
+- CSS・JSはHTML内にインラインで記述（外部ファイル禁止）
+- 新規ファイル作成は最小限に抑え、既存ファイルの編集を優先
+
+## Claude Code 運用メモ（2026-03-28 蓄積分）
+
+### 作業姿勢
+
+- 指示された箇所のみ修正し、周辺コードの「改善」は行わない
+- 仕様違反やバグを発見した場合は自動修正し、変更内容を報告する
+- デザインに影響する変更は必ず事前確認を取る
+- コード変更前に必ず対象ファイルを読み、既存実装を理解してから着手する
+
+### コミット・プッシュの原則
+
+- `git add .` → `git commit` → `git push` はユーザー指示があった場合のみ
+- コミットメッセージはユーザー指定があればそのまま使用
+- `.claude/` フォルダはローカル設定のため、必要に応じて `.gitignore` で除外を検討

@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Read(//c/Users/Ossan-PC2/tokyokasetsu-company/**)",
+      "Bash(done)",
+      "Bash(awk 'NR>=233 && NR<=256' \"会社概要.html\")",
+      "Bash(awk 'NR>=103 && NR<=120' \"協力会社.html\")",
+      "Bash(awk 'NR>=242 && NR<=266' \"免振ページ.html\")",
+      "Bash(python unify.py)",
+      "Bash(python3 unify.py)",
+      "Bash(py --version)",
+      "Bash(node unify.js)",
+      "Bash(ls:*)",
+      "Bash(echo -n \"scrollY>80: \")",
+      "Read(//c/Users/Ossan-PC2/tokyokasetsu-company/hp/**)",
+      "Bash(else echo:*)",
+      "Bash(fi)",
+      "Bash(echo \"[$f]\")",
+      "Bash(sed 's/→$//')",
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)",
+      "Bash(git remote:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
