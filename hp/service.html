@@ -166,7 +166,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 .crest-area{
   position:relative;width:100%;height:35svh;
   overflow:hidden;display:flex;align-items:center;justify-content:center;
-  padding-top:80px;
+  margin-top:80px;
   background:#ffffff;
   cursor:default;
 }
@@ -426,7 +426,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
   .g-hd__ham{display:block}
   .g-hd,.g-hd__in{height:64px}
   .l-nav{top:64px}
-  .crest-area{padding-top:64px}
+  .crest-area{margin-top:64px}
   .card{grid-template-columns:1fr !important;min-height:auto}
   .card:nth-child(even) .card__img,.card:nth-child(even) .card__body{order:unset}
   .card__img{min-height:220px}
@@ -851,6 +851,62 @@ var hdr=document.querySelector(".header");
 window.addEventListener("scroll",function(){hdr.classList.toggle("scrolled",window.scrollY>80)});
 </script>
 <script>
+  /* === showStd / showSpc : 紋章ゾーン切り替え === */
+  var crestArea=document.getElementById('CA');
+  var contentPanels=document.getElementById('contentPanels');
+  var panelStd=document.getElementById('panelStd');
+  var panelSpc=document.getElementById('panelSpc');
+  var zoneStd=document.getElementById('zoneStd');
+  var zoneSpc=document.getElementById('zoneSpc');
+
+  function showStd(){
+    crestArea.classList.add('picked','show-std');
+    crestArea.classList.remove('show-spc');
+    contentPanels.classList.add('open','bg-std');
+    contentPanels.classList.remove('bg-spc');
+    panelStd.classList.add('on');
+    panelSpc.classList.remove('on');
+    /* カード表示アニメ */
+    setTimeout(function(){
+      panelStd.querySelectorAll('.method__text').forEach(function(el){el.classList.add('in')});
+    },200);
+    contentPanels.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function showSpc(){
+    crestArea.classList.add('picked','show-spc');
+    crestArea.classList.remove('show-std');
+    contentPanels.classList.add('open','bg-spc');
+    contentPanels.classList.remove('bg-std');
+    panelSpc.classList.add('on');
+    panelStd.classList.remove('on');
+    setTimeout(function(){
+      panelSpc.querySelectorAll('.method__text').forEach(function(el){el.classList.add('in')});
+    },200);
+    contentPanels.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  /* ゾーン hover/click イベント */
+  zoneStd.addEventListener('mouseenter',function(){
+    crestArea.classList.add('show-std');
+    crestArea.classList.remove('show-spc');
+  });
+  zoneSpc.addEventListener('mouseenter',function(){
+    crestArea.classList.add('show-spc');
+    crestArea.classList.remove('show-std');
+  });
+  zoneStd.addEventListener('mouseleave',function(){
+    if(!crestArea.classList.contains('picked')){
+      crestArea.classList.remove('show-std');
+    }
+  });
+  zoneSpc.addEventListener('mouseleave',function(){
+    if(!crestArea.classList.contains('picked')){
+      crestArea.classList.remove('show-spc');
+    }
+  });
+  zoneStd.addEventListener('click',function(){showStd()});
+  zoneSpc.addEventListener('click',function(){showSpc()});
+
 /* Local nav */
   var lnav=document.getElementById('lnav');
   var caEl=document.getElementById('CA');
