@@ -2,7 +2,7 @@
 
 **調査日**: 2026-03-28
 **対象**: hp/ フォルダー内 全6ファイル
-**最終更新**: 2026-03-30（service.html ヘッダー被り修正・showStd/showSpc実装）
+**最終更新**: 2026-03-30（service.html ヘッダー・フッター統一・ページ移管アニメ削除）
 
 ---
 
@@ -11,7 +11,7 @@
 | ファイル | 修正前 | 修正後 | 主な対応 |
 |---|:---:|:---:|---|
 | index.html | 85% | 95% | ✅ JS変数名修正・英語ラベル削除・OGP追加 |
-| service.html | 75% | 97% | ✅ showStd/showSpc実装・紋章切替UI完全実装・ゾーンhover/clickイベント実装・margin-top修正確定・英語ラベル削除・OGP追加・mainタグ追加 |
+| service.html | 75% | 98% | ✅ ヘッダー・フッター統一版CSS適用・旧CSS完全削除・PT移管アニメ削除・showStd/showSpc実装・紋章切替UI・margin-top修正・英語ラベル削除・OGP追加 |
 | menshin.html | 82% | 95% | ✅ CSS残存削除・英語ラベル削除・OGP追加・mainタグ追加 |
 | recruit.html | 70% | 92% | ✅ 数字セクション追加・#positionsリンク修正・英語ラベル削除・section-label--dark CSS追加・OGP追加 |
 | company.html | 78% | 93% | ✅ CSS残存削除・padding-top修正・英語ラベル削除・OGP追加 |
@@ -35,7 +35,7 @@
 
 ---
 
-### service.html（75% → 97%）
+### service.html（75% → 98%）
 
 | 修正項目 | 状態 |
 |---|---|
@@ -44,13 +44,18 @@
 | contentPanels表示ロジック（重大） | ✅ open/bg-std/bg-spc class付与実装 |
 | パネルon class切替（重大） | ✅ 個別パネルの表示/非表示切替実装 |
 | padding-top → margin-top | ✅ .crest-area 2箇所修正（2026-03-30コード上で確定修正） |
+| ヘッダー・フッターCSS統一（重大） | ✅ 旧.g-hd/.ft/.ptop/.flt CSS完全削除、UNIFIED CSS適用（2026-03-30） |
+| ページ移管アニメ削除 | ✅ #pt-ov CSS・HTML・JS完全削除（2026-03-30） |
+| RESPONSIVE旧クラス参照削除 | ✅ .g-hd 3行 + .ft__/.flt/.ptop 4行削除（2026-03-30） |
 | JS変数名 | ✅ 調査の結果、既にhamburger/spNavで正しかった |
 | 英語ラベル削除 | ✅ METHOD 01-08（STANDARD/SPECIAL）8箇所 |
 | OGP/favicon追加 | ✅ |
 | mainタグ追加 | ✅ |
 | HTMLコメント構文修正 | ✅ L669 |
 
-**2026-03-30修正**: ヘッダー文字被り（padding-top→margin-top実コード修正）・showStd/showSpc関数＋ゾーンイベントリスナー実装。詳細は `lessons-learned/ヘッダー文字被りとshowStd関数未定義-2026-03-28.md` 参照。
+**2026-03-30修正①**: ヘッダー文字被り（padding-top→margin-top）・showStd/showSpc関数実装。詳細は `lessons-learned/ヘッダー文字被りとshowStd関数未定義-2026-03-28.md` 参照。
+
+**2026-03-30修正②**: ヘッダー・フッターCSS統一・旧CSS完全削除・ページ移管アニメ削除。旧CSS 91行削除、PT HTML 13行削除、PT JS 18行削除。詳細は `lessons-learned/ヘッダーフッター統一とページ移管アニメ削除-2026-03-30.md` 参照。
 
 **残課題**: なし
 
