@@ -2,7 +2,7 @@
 
 **調査日**: 2026-03-28
 **対象**: hp/ フォルダー内 全6ファイル
-**最終更新**: 2026-03-28（feature/new-pages 全ページ修正完了）
+**最終更新**: 2026-03-30（service.html ヘッダー被り修正・showStd/showSpc実装）
 
 ---
 
@@ -11,7 +11,7 @@
 | ファイル | 修正前 | 修正後 | 主な対応 |
 |---|:---:|:---:|---|
 | index.html | 85% | 95% | ✅ JS変数名修正・英語ラベル削除・OGP追加 |
-| service.html | 75% | 95% | ✅ showStd/showSpc実装・紋章切替UI完全実装・padding-top修正・英語ラベル削除・OGP追加・mainタグ追加 |
+| service.html | 75% | 97% | ✅ showStd/showSpc実装・紋章切替UI完全実装・ゾーンhover/clickイベント実装・margin-top修正確定・英語ラベル削除・OGP追加・mainタグ追加 |
 | menshin.html | 82% | 95% | ✅ CSS残存削除・英語ラベル削除・OGP追加・mainタグ追加 |
 | recruit.html | 70% | 92% | ✅ 数字セクション追加・#positionsリンク修正・英語ラベル削除・section-label--dark CSS追加・OGP追加 |
 | company.html | 78% | 93% | ✅ CSS残存削除・padding-top修正・英語ラベル削除・OGP追加 |
@@ -35,20 +35,22 @@
 
 ---
 
-### service.html（75% → 95%）
+### service.html（75% → 97%）
 
 | 修正項目 | 状態 |
 |---|---|
-| showStd()/showSpc() 関数実装（重大） | ✅ パネル表示＋スクロール機能を実装 |
-| 紋章ゾーンイベントリスナー追加（重大） | ✅ hover/clickでshow-std/show-spc切替 |
+| showStd()/showSpc() 関数実装（重大） | ✅ パネル表示＋スクロール＋method__textアニメ（2026-03-30再実装） |
+| 紋章ゾーンイベントリスナー追加（重大） | ✅ hover/clickでshow-std/show-spc切替（2026-03-30再実装） |
 | contentPanels表示ロジック（重大） | ✅ open/bg-std/bg-spc class付与実装 |
 | パネルon class切替（重大） | ✅ 個別パネルの表示/非表示切替実装 |
-| padding-top → margin-top | ✅ .crest-area 2箇所修正 |
+| padding-top → margin-top | ✅ .crest-area 2箇所修正（2026-03-30コード上で確定修正） |
 | JS変数名 | ✅ 調査の結果、既にhamburger/spNavで正しかった |
 | 英語ラベル削除 | ✅ METHOD 01-08（STANDARD/SPECIAL）8箇所 |
 | OGP/favicon追加 | ✅ |
 | mainタグ追加 | ✅ |
 | HTMLコメント構文修正 | ✅ L669 |
+
+**2026-03-30修正**: ヘッダー文字被り（padding-top→margin-top実コード修正）・showStd/showSpc関数＋ゾーンイベントリスナー実装。詳細は `lessons-learned/ヘッダー文字被りとshowStd関数未定義-2026-03-28.md` 参照。
 
 **残課題**: なし
 
