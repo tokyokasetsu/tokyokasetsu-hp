@@ -150,6 +150,10 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
   .floating{display:flex}
 }
 
+
+/* ===== PAGE TRANSITION SLIME ===== */
+#pt-flag{position:fixed;inset:0;z-index:99999;display:none;background:#0e1a2a}
+#pt-flag canvas{position:absolute;inset:0}
 </style>
 </head>
 <body>
@@ -162,7 +166,7 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
 </div></header>
 <nav class="sp-nav" id="spNav"><ul class="sp-nav__list"><li class="sp-nav__item"><a href="service.html" class="sp-nav__link">事業案内</a></li><li class="sp-nav__item"><a href="partner.html" class="sp-nav__link">協力会社</a></li><li class="sp-nav__item"><a href="menshin.html" class="sp-nav__link">免震足場</a></li><li class="sp-nav__item"><a href="zumen.html" class="sp-nav__link">図面品質</a></li><li class="sp-nav__item"><a href="works.html" class="sp-nav__link">施工事例</a></li><li class="sp-nav__item"><a href="blog.html" class="sp-nav__link">ブログ</a></li><li class="sp-nav__item"><a href="recruit.html" class="sp-nav__link">採用情報</a></li><li class="sp-nav__item"><a href="company.html" class="sp-nav__link">会社情報</a></li><li class="sp-nav__item"><a href="contact.html" class="sp-nav__link">お問い合わせ</a></li></ul><div class="sp-nav__contact"><a href="tel:0369041860" class="sp-nav__tel">03-6904-1860</a></div></nav>
 
-<section class="hero">
+<section class="hero" data-label="ページヒーロー">
   <div class="hero__inner">
     <div class="hero__eyebrow"></div>
     <h1 class="hero__title">協力会社を募集しています</h1>
@@ -173,7 +177,7 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
 <main class="main">
 
   <h2 class="sec-title">募集要件</h2>
-  <div class="req-list">
+  <div class="req-list" data-label="募集要件">
     <div class="req-item">
       <span class="req-num">01</span>
       <div>
@@ -205,23 +209,23 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
   </div>
 
   <h2 class="sec-title">お任せしたい工事</h2>
-  <div class="work-list">
+  <div class="work-list" data-label="依頼できる仕事">
     <div class="work-item">
-      <div class="work-body">
+      <div class="work-body" data-label="A: 建築・改修工事用足場">
         <div class="work-name">建築・改修工事用足場</div>
         <div class="work-desc">マンション・ビルの外壁修繕に伴う枠組み・くさび足場の組立・解体</div>
       </div>
       <span class="work-tag">都心案件多数</span>
     </div>
     <div class="work-item">
-      <div class="work-body">
+      <div class="work-body" data-label="B: 新築工事仮設足場">
         <div class="work-name">新築工事仮設足場</div>
         <div class="work-desc">住宅・店舗・施設の新築工事における仮設足場の設置・管理</div>
       </div>
       <span class="work-tag">長期案件あり</span>
     </div>
     <div class="work-item">
-      <div class="work-body">
+      <div class="work-body" data-label="C: 緊急・スポット対応">
         <div class="work-name">緊急・スポット対応</div>
         <div class="work-desc">突発修繕・台風後の応急処置など、機動力のある会社様も随時歓迎</div>
       </div>
@@ -230,7 +234,7 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
   </div>
 
   <h2 class="sec-title" id="form">応募フォーム</h2>
-  <div class="form-wrap">
+  <div class="form-wrap" data-label="お問い合わせフォーム">
     <form>
       <div class="form-grid">
         <div class="form-group">
@@ -315,5 +319,180 @@ window.addEventListener('scroll',chk);window.addEventListener('load',chk);
 var hdr=document.querySelector(".header");
 window.addEventListener("scroll",function(){hdr.classList.toggle("scrolled",window.scrollY>80)});
 </script>
+<script>
+(function(){
+  window.addEventListener('load',function(){
+    document.querySelectorAll('[data-photo]').forEach(function(slot){
+      var key=slot.getAttribute('data-photo');
+      var exts=['jpg','jpeg','png','webp'];
+      function tryLoad(i){
+        if(i>=exts.length)return;
+        var img=new Image();
+        img.onload=function(){
+          slot.innerHTML='';
+          slot.style.background='none';
+          img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;';
+          slot.appendChild(img);
+        };
+        img.onerror=function(){tryLoad(i+1);};
+        img.src='assets/images/'+key+'/'+exts[i];
+      }
+      tryLoad(0);
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var style=document.createElement('style');
+  style.textContent='.dbg-pin{position:absolute;top:0;left:0;z-index:99999;background:rgba(220,30,30,.88);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;font-family:monospace;letter-spacing:.04em;pointer-events:none;white-space:nowrap;}';
+  document.head.appendChild(style);
+  window.addEventListener('load',function(){
+    document.querySelectorAll('[data-label]').forEach(function(el){
+      var pos=window.getComputedStyle(el).position;
+      if(pos==='static')el.style.position='relative';
+      var pin=document.createElement('span');
+      pin.className='dbg-pin';
+      pin.textContent=el.getAttribute('data-label');
+      el.insertBefore(pin,el.firstChild);
+    });
+  });
+})();
+</script>
+<div id="pt-flag"><canvas id="pt-cv"></canvas></div>
+
+<script>
+/* ===== PAGE TRANSITION SLIME ===== */
+(function(){
+var flag=document.getElementById('pt-flag');
+var cv=document.getElementById('pt-cv');
+var ctx=cv.getContext('2d');
+var animId=null,s0=null,last=null,drops=[];
+var BANDS=[{r:20,g:80,b:220},{r:90,g:185,b:210},{r:190,g:215,b:255}];
+function rand(a,b){return a+Math.random()*(b-a);}
+var N=24,PI2=Math.PI*2;
+var colorCache={};
+function col(R,G,B,a){var k=R+'_'+G+'_'+B+'_'+a;if(!colorCache[k])colorCache[k]='rgba('+R+','+G+','+B+','+a+')';return colorCache[k];}
+function clamp(v){return v<0?0:v>255?255:v;}
+function drawSlime(x,y,r,R,G,B,t,vx){
+  var speed=vx<160?0:vx>2000?1:vx/2000;
+  ctx.save();ctx.translate(x,y);
+  var osc1=Math.sin(t*2.4)*0.06*(1-speed*0.5);
+  var osc2=Math.sin(t*3.1+1.3)*0.04*(1-speed*0.4);
+  var rx=(r*(1.20+osc1))*(1-speed)+(r*(0.78+osc2*0.5))*speed;
+  var ry=(r*(0.80+osc2))*(1-speed)+(r*(1.08+osc1*0.4))*speed;
+  var frontIndent=r*speed*0.12,backRx=rx*(1+speed*0.15),bottomFlare=r*(1-speed)*0.22;
+  var p=new Path2D();
+  var isRest=speed<0.08;
+  for(var i=0;i<=N;i++){
+    var a=(i/N)*PI2,ca=Math.cos(a),sa=Math.sin(a),px,py;
+    if(isRest){
+      var rr=r+r*0.12*(sa+1)*0.5;
+      rr+=r*(Math.sin(t*1.1+a)*0.08+Math.sin(t*1.5+a*2+1.0)*0.04);
+      if(sa>0.5) rr+=bottomFlare*sa;
+      px=ca*rr;py=sa*rr;
+    } else {
+      var rxL=ca>0?rx-frontIndent*ca:backRx+r*speed*0.05*(-ca);
+      px=ca*rxL;py=sa*ry;
+      var vib=r*0.02*speed;
+      px+=Math.sin(t*4.2+a*2)*vib*Math.abs(sa);
+      py+=Math.sin(t*3.8+a*3)*vib*Math.abs(ca);
+    }
+    if(i===0)p.moveTo(px,py);else p.lineTo(px,py);
+  }
+  p.closePath();
+  ctx.strokeStyle=col(clamp(R-65),clamp(G-55),clamp(B-35),0.75);
+  ctx.lineWidth=r*0.10;ctx.lineJoin='round';ctx.stroke(p);
+  ctx.fillStyle=col(clamp(R+80),clamp(G+85),clamp(B+90),0.28);ctx.fill(p);
+  ctx.beginPath();ctx.ellipse(-rx*0.20,-ry*0.35,rx*0.20,ry*0.12,-0.2,0,PI2);
+  ctx.fillStyle='rgba(255,255,255,0.75)';ctx.fill();
+  if(r>12){
+    var er=r*0.095,bt=t%(Math.PI*5);
+    var blink=bt>Math.PI*4.7?Math.max(0.06,(Math.PI*5-bt)/(Math.PI*0.3)):1.0;
+    var fc=col(clamp(R-65),clamp(G-55),clamp(B-35),0.80);
+    ctx.beginPath();ctx.ellipse(-rx*.23,ry*.06,r*.10,r*.055,0,0,PI2);
+    ctx.fillStyle='rgba(255,125,145,0.32)';ctx.fill();
+    ctx.beginPath();ctx.ellipse(rx*.23,ry*.06,r*.10,r*.055,0,0,PI2);ctx.fill();
+    ctx.fillStyle=fc;
+    ctx.beginPath();ctx.ellipse(-rx*.20,-ry*.08,er,er*blink,0,0,PI2);ctx.fill();
+    ctx.beginPath();ctx.ellipse( rx*.20,-ry*.08,er,er*blink,0,0,PI2);ctx.fill();
+    if(blink>0.3){
+      ctx.fillStyle='rgba(255,255,255,0.90)';
+      ctx.beginPath();ctx.ellipse(-rx*.18,-ry*.12,er*.32,er*.20,-0.3,0,PI2);ctx.fill();
+      ctx.beginPath();ctx.ellipse( rx*.22,-ry*.12,er*.32,er*.20,-0.3,0,PI2);ctx.fill();
+    }
+    ctx.beginPath();ctx.arc(0,ry*.13,rx*.058,0.3,Math.PI-0.3);
+    ctx.strokeStyle=col(clamp(R-55),clamp(G-45),clamp(B-28),0.42);
+    ctx.lineWidth=r*.036;ctx.lineCap='round';ctx.stroke();
+  }
+  ctx.restore();
+}
+var MAX_DROPS=1200;
+function spawnDrop(W,H){
+  if(drops.length>=MAX_DROPS)return;
+  var bi=Math.floor(Math.random()*3),b=BANDS[bi];
+  var bandH=H/3,yMin=bi*bandH,yMax=(bi+1)*bandH;
+  var r=rand(4,20),bleed=bandH*0.18;
+  drops.push({x:-r*3,y:rand(yMin-bleed+r,yMax+bleed-r),yMin0:yMin,yMax0:yMax,bandH:bandH,r:r,vx:rand(800,2200),R:b.r,G:b.g,B:b.b,t0:null,sqPh:rand(0,PI2)});
+}
+var TOTAL=2.5,FADE_OUT=0.5;
+function renderLoop(ts){
+  animId=requestAnimationFrame(renderLoop);
+  if(!s0)s0=ts;
+  var el=(ts-s0)/1000,dt=last?Math.min((ts-last)/1000,.05):.016;
+  last=ts;
+  var W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  if(el<TOTAL){
+    var t=Math.min(el/TOTAL,1),n=0.1*Math.pow(2000,t);
+    var whole=Math.floor(n);
+    var count=Math.min(whole+(Math.random()<(n-whole)?1:0),30);
+    for(var i=0;i<count;i++) spawnDrop(W,H);
+  }
+  var fadeOut=el>TOTAL-FADE_OUT?Math.max(0,1-(el-(TOTAL-FADE_OUT))/FADE_OUT):1;
+  for(var i=drops.length-1;i>=0;i--){
+    var d=drops[i];
+    if(!d.t0)d.t0=el;
+    d.x+=d.vx*dt;
+    if(d.x>W+d.r*4){drops.splice(i,1);continue;}
+    var center=(d.yMin0+d.yMax0)/2;
+    var bandFade=Math.max(0,1-Math.abs(d.y-center)/(d.bandH*0.90));
+    if(bandFade<0.04)continue;
+    ctx.globalAlpha=bandFade;
+    drawSlime(d.x,d.y,d.r,d.R,d.G,d.B,el-d.t0+d.sqPh,d.vx);
+    ctx.globalAlpha=1;
+  }
+  if(fadeOut<1){
+    ctx.fillStyle='#0e1a2a';
+    ctx.fillRect(0,0,W*(1-fadeOut)*1.05,H);
+  }
+  if(el>=TOTAL){
+    cancelAnimationFrame(animId);animId=null;s0=null;last=null;
+    flag.style.display='none';
+  }
+}
+function ptPlay(href){
+  if(animId){cancelAnimationFrame(animId);animId=null;}
+  drops=[];s0=null;last=null;colorCache={};
+  cv.width=window.innerWidth;cv.height=window.innerHeight;
+  flag.style.display='block';
+  animId=requestAnimationFrame(renderLoop);
+  setTimeout(function(){window.location.href=href;},(TOTAL-FADE_OUT)*1000);
+}
+// リンクインターセプト
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href=a.getAttribute('href');
+    if(href&&!href.startsWith('http')&&!href.startsWith('#')&&!href.startsWith('tel:')&&!href.startsWith('mailto:')){
+      a.addEventListener('click',function(e){
+        e.preventDefault();
+        ptPlay(this.getAttribute('href'));
+      });
+    }
+  });
+});
+})();
+</script>
+
 </body>
 </html>
