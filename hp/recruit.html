@@ -290,6 +290,62 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 #pt-flag{position:fixed;inset:0;z-index:99999;display:none;background:#0e1a2a}
 #pt-flag canvas{position:absolute;inset:0}
 </style>
+
+<style>
+/* JOB DETAIL STYLES */
+/* JOB DETAIL STYLES */
+    .job-detail{margin-top:56px;display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start}
+    .job-main{display:flex;flex-direction:column;gap:24px}
+    .job-card{background:#fff;border:1px solid var(--border-dark);border-radius:16px;overflow:hidden}
+    .job-card__head{background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));padding:32px 36px}
+    .job-card__head-badge{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:0.12em;color:var(--cyan);background:rgba(90,208,236,0.15);padding:4px 14px;border-radius:20px;margin-bottom:12px}
+    .job-card__head-title{font-size:1.15rem;font-weight:900;color:#fff;line-height:1.6;margin-bottom:16px}
+    .job-card__salary{font-family:var(--font-en);font-size:2rem;font-weight:800;color:var(--cyan-light);line-height:1}
+    .job-card__salary-note{font-size:0.8rem;color:var(--text-dim);margin-top:6px}
+    .job-card__body{padding:32px 36px;display:flex;flex-direction:column;gap:24px}
+    .job-section-title{font-size:0.8rem;font-weight:700;letter-spacing:0.15em;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .job-section-title::before{content:'';width:20px;height:1px;background:var(--blue)}
+    .job-table{display:flex;flex-direction:column;gap:12px}
+    .job-row{display:flex;gap:16px;font-size:0.88rem;padding-bottom:12px;border-bottom:1px solid var(--border-dark)}
+    .job-row:last-child{border-bottom:none;padding-bottom:0}
+    .job-key{width:88px;font-weight:700;color:var(--text-dark-sub);flex-shrink:0;font-size:0.8rem;line-height:1.8}
+    .job-val{color:var(--text-dark);line-height:1.8;flex:1}
+    .job-val strong{color:var(--blue);font-weight:700}
+    .job-tags{display:flex;flex-wrap:wrap;gap:6px}
+    .job-tag{font-size:0.72rem;padding:4px 12px;border-radius:20px;background:rgba(48,136,208,0.07);color:var(--blue);border:1px solid rgba(48,136,208,0.15)}
+    .job-tag--green{background:rgba(72,199,142,0.08);color:#27ae60;border-color:rgba(72,199,142,0.2)}
+    /* Salary example box */
+    .salary-box{background:var(--surface-light);border-radius:10px;padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .salary-example{text-align:center}
+    .salary-example__label{font-size:0.72rem;color:var(--text-dark-sub);margin-bottom:4px}
+    .salary-example__num{font-family:var(--font-en);font-size:1.4rem;font-weight:800;color:var(--blue);line-height:1}
+    .salary-example__sub{font-size:0.7rem;color:var(--text-dark-sub);margin-top:4px;line-height:1.5}
+    /* Sticky apply sidebar */
+    .job-sidebar{position:sticky;top:100px;display:flex;flex-direction:column;gap:16px}
+    .job-apply-card{background:linear-gradient(135deg,var(--navy-deep),var(--navy-mid));border-radius:16px;padding:32px 28px;text-align:center;border:1px solid rgba(90,208,236,0.15)}
+    .job-apply-card__title{font-size:0.8rem;font-weight:700;color:var(--text-muted);letter-spacing:0.15em;margin-bottom:16px}
+    .job-apply-card__num{font-family:var(--font-en);font-size:2.8rem;font-weight:800;line-height:1;background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+    .job-apply-card__unit{font-size:0.85rem;color:var(--text-dim);margin-bottom:24px}
+    .job-apply-btn{display:block;width:100%;padding:16px;border-radius:8px;background:var(--gradient-accent);color:#fff;font-size:0.95rem;font-weight:700;text-align:center;box-shadow:0 4px 20px rgba(48,136,208,0.3);transition:all .3s var(--ease-out);margin-bottom:12px}
+    .job-apply-btn:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(48,136,208,0.4)}
+    .job-apply-note{font-size:0.75rem;color:var(--text-muted);line-height:1.7}
+    .job-contact-card{background:#fff;border:1px solid var(--border-dark);border-radius:12px;padding:24px}
+    .job-contact-card__title{font-size:0.75rem;font-weight:700;color:var(--text-dark-sub);letter-spacing:0.1em;margin-bottom:14px}
+    .job-contact-tel{font-family:var(--font-en);font-size:1.4rem;font-weight:700;color:var(--navy-mid);margin-bottom:4px}
+    .job-contact-tel a{color:inherit}
+    .job-contact-tel a:hover{color:var(--blue)}
+    .job-contact-hours{font-size:0.75rem;color:var(--text-dark-sub)}
+    .job-contact-mail{margin-top:12px;padding-top:12px;border-top:1px solid var(--border-dark);font-size:0.82rem}
+    .job-contact-mail a{color:var(--blue)}.job-contact-mail a:hover{text-decoration:underline}
+    @media(max-width:1024px){
+      .job-detail{grid-template-columns:1fr}
+      .job-sidebar{position:relative;top:0}
+    }
+    @media(max-width:640px){
+      .job-card__head{padding:24px 20px}.job-card__body{padding:24px 20px}
+      .salary-box{grid-template-columns:1fr}
+    }
+</style>
 </head>
 <body>
 
@@ -301,7 +357,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
   <button class="header__hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </div></header>
 
-<nav class="sp-nav" id="spNav"><ul class="sp-nav__list"><li class="sp-nav__item"><a href="service.html" class="sp-nav__link">事業案内</a></li><li class="sp-nav__item"><a href="partner.html" class="sp-nav__link">協力会社</a></li><li class="sp-nav__item"><a href="menshin.html" class="sp-nav__link">免震足場</a></li><li class="sp-nav__item"><a href="zumen.html" class="sp-nav__link">図面品質</a></li><li class="sp-nav__item"><a href="works.html" class="sp-nav__link">施工事例</a></li><li class="sp-nav__item"><a href="blog.html" class="sp-nav__link">ブログ</a></li><li class="sp-nav__item"><a href="recruit.html" class="sp-nav__link">採用情報</a></li><li class="sp-nav__item"><a href="company.html" class="sp-nav__link">会社情報</a></li><li class="sp-nav__item"><a href="contact.html" class="sp-nav__link">お問い合わせ</a></li></ul><div class="sp-nav__contact"><a href="tel:0369041860" class="sp-nav__tel">03-6904-1860</a></div></nav>
+<nav class="sp-nav" id="spNav"><ul class="sp-nav__list"><li class="sp-nav__item"><a href="service.html" class="sp-nav__link">事業案内</a></li><li class="sp-nav__item"><a href="partner.html" class="sp-nav__link">協力会社</a></li><li class="sp-nav__item"><a href="menshin.html" class="sp-nav__link">免震足場</a></li><li class="sp-nav__item"><a href="zumen.html" class="sp-nav__link">図面品質</a></li><li class="sp-nav__item"><a href="works.html" class="sp-nav__link">施工事例</a></li><li class="sp-nav__item"><a href="blog.html" class="sp-nav__link">ブログ</a></li><li class="sp-nav__item"><a href="recruit.html" class="sp-nav__link">採用情報</a></li><li class="sp-nav__item"><a href="company.html" class="sp-nav__link">会社情報</a></li><li class="sp-nav__item"><a href="contact.html" class="sp-nav__link">お問い合わせ</a></li></ul></nav>
 </nav>
 
 
@@ -380,60 +436,6 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
     <h2 class="section-title reveal reveal-delay-1">募集職種</h2>
     <p class="section-lead section-lead--sub reveal reveal-delay-2">大手ゼネコン元請け・足場施工スタッフとして正社員募集神奈川県内（横浜・川崎・大和エリア）の現場がメインです</p>
 
-    <style>
-    /* JOB DETAIL STYLES */
-    .job-detail{margin-top:56px;display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start}
-    .job-main{display:flex;flex-direction:column;gap:24px}
-    .job-card{background:#fff;border:1px solid var(--border-dark);border-radius:16px;overflow:hidden}
-    .job-card__head{background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));padding:32px 36px}
-    .job-card__head-badge{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:0.12em;color:var(--cyan);background:rgba(90,208,236,0.15);padding:4px 14px;border-radius:20px;margin-bottom:12px}
-    .job-card__head-title{font-size:1.15rem;font-weight:900;color:#fff;line-height:1.6;margin-bottom:16px}
-    .job-card__salary{font-family:var(--font-en);font-size:2rem;font-weight:800;color:var(--cyan-light);line-height:1}
-    .job-card__salary-note{font-size:0.8rem;color:var(--text-dim);margin-top:6px}
-    .job-card__body{padding:32px 36px;display:flex;flex-direction:column;gap:24px}
-    .job-section-title{font-size:0.8rem;font-weight:700;letter-spacing:0.15em;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-    .job-section-title::before{content:'';width:20px;height:1px;background:var(--blue)}
-    .job-table{display:flex;flex-direction:column;gap:12px}
-    .job-row{display:flex;gap:16px;font-size:0.88rem;padding-bottom:12px;border-bottom:1px solid var(--border-dark)}
-    .job-row:last-child{border-bottom:none;padding-bottom:0}
-    .job-key{width:88px;font-weight:700;color:var(--text-dark-sub);flex-shrink:0;font-size:0.8rem;line-height:1.8}
-    .job-val{color:var(--text-dark);line-height:1.8;flex:1}
-    .job-val strong{color:var(--blue);font-weight:700}
-    .job-tags{display:flex;flex-wrap:wrap;gap:6px}
-    .job-tag{font-size:0.72rem;padding:4px 12px;border-radius:20px;background:rgba(48,136,208,0.07);color:var(--blue);border:1px solid rgba(48,136,208,0.15)}
-    .job-tag--green{background:rgba(72,199,142,0.08);color:#27ae60;border-color:rgba(72,199,142,0.2)}
-    /* Salary example box */
-    .salary-box{background:var(--surface-light);border-radius:10px;padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .salary-example{text-align:center}
-    .salary-example__label{font-size:0.72rem;color:var(--text-dark-sub);margin-bottom:4px}
-    .salary-example__num{font-family:var(--font-en);font-size:1.4rem;font-weight:800;color:var(--blue);line-height:1}
-    .salary-example__sub{font-size:0.7rem;color:var(--text-dark-sub);margin-top:4px;line-height:1.5}
-    /* Sticky apply sidebar */
-    .job-sidebar{position:sticky;top:100px;display:flex;flex-direction:column;gap:16px}
-    .job-apply-card{background:linear-gradient(135deg,var(--navy-deep),var(--navy-mid));border-radius:16px;padding:32px 28px;text-align:center;border:1px solid rgba(90,208,236,0.15)}
-    .job-apply-card__title{font-size:0.8rem;font-weight:700;color:var(--text-muted);letter-spacing:0.15em;margin-bottom:16px}
-    .job-apply-card__num{font-family:var(--font-en);font-size:2.8rem;font-weight:800;line-height:1;background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
-    .job-apply-card__unit{font-size:0.85rem;color:var(--text-dim);margin-bottom:24px}
-    .job-apply-btn{display:block;width:100%;padding:16px;border-radius:8px;background:var(--gradient-accent);color:#fff;font-size:0.95rem;font-weight:700;text-align:center;box-shadow:0 4px 20px rgba(48,136,208,0.3);transition:all .3s var(--ease-out);margin-bottom:12px}
-    .job-apply-btn:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(48,136,208,0.4)}
-    .job-apply-note{font-size:0.75rem;color:var(--text-muted);line-height:1.7}
-    .job-contact-card{background:#fff;border:1px solid var(--border-dark);border-radius:12px;padding:24px}
-    .job-contact-card__title{font-size:0.75rem;font-weight:700;color:var(--text-dark-sub);letter-spacing:0.1em;margin-bottom:14px}
-    .job-contact-tel{font-family:var(--font-en);font-size:1.4rem;font-weight:700;color:var(--navy-mid);margin-bottom:4px}
-    .job-contact-tel a{color:inherit}
-    .job-contact-tel a:hover{color:var(--blue)}
-    .job-contact-hours{font-size:0.75rem;color:var(--text-dark-sub)}
-    .job-contact-mail{margin-top:12px;padding-top:12px;border-top:1px solid var(--border-dark);font-size:0.82rem}
-    .job-contact-mail a{color:var(--blue)}.job-contact-mail a:hover{text-decoration:underline}
-    @media(max-width:1024px){
-      .job-detail{grid-template-columns:1fr}
-      .job-sidebar{position:relative;top:0}
-    }
-    @media(max-width:640px){
-      .job-card__head{padding:24px 20px}.job-card__body{padding:24px 20px}
-      .salary-box{grid-template-columns:1fr}
-    }
-    </style>
 
     <div class="job-detail">
       <!-- MAIN JOB CONTENT -->
@@ -775,7 +777,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
   <p class="footer__copyright">© 2026 TOKYO KASETSU CO., LTD. All Rights Reserved.</p>
 </div></footer>
 <a href="#" class="pagetop" id="pagetop">↑</a>
-<div class="floating"><a href="tel:0369041860" class="floating__btn floating__btn--tel">📞 電話する</a><a href="contact.html" class="floating__btn floating__btn--mail">✉️ お問い合わせ</a></div>
+<div class="floating"><a href="contact.html" class="floating__btn floating__btn--mail">✉️ お問い合わせ</a></div>
 
 
 
@@ -842,3 +844,5 @@ function ptPlay(href){if(animId){cancelAnimationFrame(animId);animId=null;}drops
 document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href]').forEach(function(a){var href=a.getAttribute('href');if(href&&!href.startsWith('http')&&!href.startsWith('#')&&!href.startsWith('tel:')&&!href.startsWith('mailto:')){a.addEventListener('click',function(e){e.preventDefault();ptPlay(this.getAttribute('href'));});}});});
 })();
 </script>
+</body>
+</html>

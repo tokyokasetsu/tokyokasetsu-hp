@@ -258,7 +258,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
   <button class="header__hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </div></header>
 
-<nav class="sp-nav" id="spNav"><ul class="sp-nav__list"><li class="sp-nav__item"><a href="service.html" class="sp-nav__link">事業案内</a></li><li class="sp-nav__item"><a href="partner.html" class="sp-nav__link">協力会社</a></li><li class="sp-nav__item"><a href="menshin.html" class="sp-nav__link">免震足場</a></li><li class="sp-nav__item"><a href="zumen.html" class="sp-nav__link">図面品質</a></li><li class="sp-nav__item"><a href="works.html" class="sp-nav__link">施工事例</a></li><li class="sp-nav__item"><a href="blog.html" class="sp-nav__link">ブログ</a></li><li class="sp-nav__item"><a href="recruit.html" class="sp-nav__link">採用情報</a></li><li class="sp-nav__item"><a href="company.html" class="sp-nav__link">会社情報</a></li><li class="sp-nav__item"><a href="contact.html" class="sp-nav__link">お問い合わせ</a></li></ul><div class="sp-nav__contact"><a href="tel:0369041860" class="sp-nav__tel">03-6904-1860</a></div></nav>
+<nav class="sp-nav" id="spNav"><ul class="sp-nav__list"><li class="sp-nav__item"><a href="service.html" class="sp-nav__link">事業案内</a></li><li class="sp-nav__item"><a href="partner.html" class="sp-nav__link">協力会社</a></li><li class="sp-nav__item"><a href="menshin.html" class="sp-nav__link">免震足場</a></li><li class="sp-nav__item"><a href="zumen.html" class="sp-nav__link">図面品質</a></li><li class="sp-nav__item"><a href="works.html" class="sp-nav__link">施工事例</a></li><li class="sp-nav__item"><a href="blog.html" class="sp-nav__link">ブログ</a></li><li class="sp-nav__item"><a href="recruit.html" class="sp-nav__link">採用情報</a></li><li class="sp-nav__item"><a href="company.html" class="sp-nav__link">会社情報</a></li><li class="sp-nav__item"><a href="contact.html" class="sp-nav__link">お問い合わせ</a></li></ul></nav>
 <main>
 <!-- PAGE HERO -->
 <section class="page-hero" data-label="ページヒーロー">
@@ -721,7 +721,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
   <p class="footer__copyright">© 2026 TOKYO KASETSU CO., LTD. All Rights Reserved.</p>
 </div></footer>
 <a href="#" class="pagetop" id="pagetop">↑</a>
-<div class="floating"><a href="tel:0369041860" class="floating__btn floating__btn--tel">📞 電話する</a><a href="contact.html" class="floating__btn floating__btn--mail">✉️ お問い合わせ</a></div>
+<div class="floating"><a href="contact.html" class="floating__btn floating__btn--mail">✉️ お問い合わせ</a></div>
 
 
 
@@ -887,6 +887,12 @@ function ptPlay(href){
   setTimeout(function(){window.location.href=href;},(TOTAL-FADE_OUT)*1000);
 }
 // リンクインターセプト
+// Reveal
+var revs=document.querySelectorAll('.reveal');
+function chk(){revs.forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight-80)el.classList.add('visible')})}
+window.addEventListener('scroll',chk);window.addEventListener('load',chk);
+// Header scroll
+var hdr=document.querySelector(".header");window.addEventListener("scroll",function(){hdr.classList.toggle("scrolled",window.scrollY>80)});
 document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('a[href]').forEach(function(a){
     var href=a.getAttribute('href');
