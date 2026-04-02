@@ -111,7 +111,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 .section-lead{font-size:0.95rem;color:var(--text-dim);max-width:600px;line-height:2}
 
 /* ===== KUYO-MON ===== */
-.reason{position:relative;overflow:hidden;background:#eef4fa;height:100vh;min-height:700px}
+.reason{position:relative;overflow:hidden;background:#eef4fa;height:100vh;min-height:700px;touch-action:pan-y;}
 .reason__scaffold{display:none}
 
 .reason__header{position:absolute;top:40px;left:0;right:0;text-align:center;z-index:25;pointer-events:none;color:var(--text-dark)}
@@ -280,7 +280,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 .hero__content{padding:120px 20px 60px 6vw}.hero__catch-box{padding:28px 24px}
 .hero__btns{flex-direction:column}.hero__btn{justify-content:center}
 .works__grid{grid-template-columns:1fr 1fr;gap:8px}.hero__scroll{display:none}
-.kuyo-node{height:100px!important}
+.kuyo-node{height:100px!important}.numbers__grid{grid-template-columns:repeat(2,1fr)!important;gap:20px!important;}
 }
   
 /* Center circle animations */
@@ -508,7 +508,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 #pt-flag canvas{position:absolute;inset:0}
 
 /* ===== 関東地図 × 家紋UI スケール ===== */
-.reason__map-japan{position:absolute;z-index:0;pointer-events:none;}
+.reason__map-japan{position:absolute;z-index:0;pointer-events:none;touch-action:none;}
 .kuyo-wrap{position:absolute!important;display:block!important;width:var(--kw-size)!important;height:var(--kw-size)!important;left:calc(50% - var(--kw-half))!important;top:calc(50% - var(--kw-half))!important;transform:none!important;}
 .kuyo-center{
   position:absolute!important;
@@ -992,7 +992,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 
 <section class="cta"><div class="container">
   <div class="cta__inner reveal">
-    <div class="cta__actions"><div class="cta__tel"><a href="contact.html" class="btn btn--primary" style="margin-top:8px">お問い合わせフォームへ →</a></div><div class="cta__divider"></div><a href="contact.html" class="btn btn--accent">ご依頼・お見積りの方はこちら <span class="btn-arrow">→</span></a></div>
+    <div class="cta__actions"><a href="contact.html" class="btn btn--accent">ご依頼・お見積りの方はこちら <span class="btn-arrow">→</span></a></div>
   </div>
 </div></section>
 
@@ -1222,6 +1222,16 @@ window.addEventListener("scroll",function(){hdr.classList.toggle("scrolled",wind
     if(node){node.classList.add('active');spawnSplash(node);spawnParticles(node)}
   }
   wrap.addEventListener('mousemove',function(e){var rect=wrap.getBoundingClientRect();var mx=(e.clientX-rect.left)/(rect.width/620);var my=(e.clientY-rect.top)/(rect.height/620);var closest=null,closestDist=Infinity;nodes.forEach(function(node){var c=centers[node.id];if(!c)return;var dist=Math.sqrt(Math.pow(mx-c.x,2)+Math.pow(my-c.y,2));if(dist<hitR[node.id]+30&&dist<closestDist){closestDist=dist;closest=node}});activate(closest)});
+  /* スマホ: タッチ位置からノードを検出してactivate（リンクには飛ばない） */
+  wrap.addEventListener('touchstart',function(e){
+    var t=e.touches[0];
+    var rect=wrap.getBoundingClientRect();
+    var mx=(t.clientX-rect.left)/(rect.width/620);
+    var my=(t.clientY-rect.top)/(rect.height/620);
+    var closest=null,closestDist=Infinity;
+    nodes.forEach(function(node){var c=centers[node.id];if(!c)return;var dist=Math.sqrt(Math.pow(mx-c.x,2)+Math.pow(my-c.y,2));if(dist<hitR[node.id]+30&&dist<closestDist){closestDist=dist;closest=node;}});
+    if(closest){e.preventDefault();activate(closest);}
+  },{passive:false});
   wrap.addEventListener('mouseleave',function(){activate(null)});
   nodes.forEach(function(node){node.addEventListener('click',function(){if(node.classList.contains('active')){var href=node.getAttribute('data-href');if(href)window.location.href=href}})});
   // Nodes pop in after splash - wait for anim-started class
@@ -1396,12 +1406,11 @@ document.addEventListener('DOMContentLoaded',function(){
 /* ===== 関東地図 × 家紋UI スケール ===== */
 (function(){
   var REF_W=1920,KANTO_RX=0.495,KANTO_RY=0.398;
-  var MAP_W=1100*0.85,MAP_H=1000*0.85;
+  /* MAP_W/MAP_HはupDateで動的計算 */
   var root=document.documentElement;
   var map=document.getElementById('japan-map');
   if(!map) return;
-  map.style.width=MAP_W+'px'; map.style.height=MAP_H+'px';
-  map.style.transformOrigin=(MAP_W*KANTO_RX)+'px '+(MAP_H*KANTO_RY)+'px';
+  /* 地図サイズはupdate()で動的計算 */
 
   function update(){
     var W=window.innerWidth,H=window.innerHeight;
@@ -1418,9 +1427,19 @@ document.addEventListener('DOMContentLoaded',function(){
     root.style.setProperty('--kr2',Math.round(200*s)+'px');
     root.style.setProperty('--kr3',Math.round(300*s)+'px');
     root.style.setProperty('--kr4',Math.round(420*s)+'px');
-    map.style.left=(W/2-MAP_W*KANTO_RX)+'px';
-    map.style.top=(H/2-MAP_H*KANTO_RY)+'px';
-    map.style.transform='scale('+s+')';
+    /* ★ 地図: 画面幅をカバー、かつ上端が見切れない最大スケール */
+    var mapS = W / 1100;                          /* 幅基準 */
+    var maxByTop = (H/2) / (1000 * KANTO_RY);    /* 上端が0になるスケール上限 */
+    mapS = Math.min(mapS, maxByTop);              /* 上端が見切れないよう制限 */
+    mapS = Math.max(mapS, 0.7);                   /* 最小値 */
+    var mW = Math.round(1100 * mapS);
+    var mH = Math.round(1000 * mapS);
+    map.style.width  = mW + 'px';
+    map.style.height = mH + 'px';
+    map.style.transformOrigin = Math.round(mW*KANTO_RX)+'px '+Math.round(mH*KANTO_RY)+'px';
+    map.style.left   = Math.round(W/2 - mW*KANTO_RX) + 'px';
+    map.style.top    = Math.round(H/2 - mH*KANTO_RY) + 'px';
+    map.style.transform = 'none';
   }
   update();
   window.addEventListener('resize',update);
