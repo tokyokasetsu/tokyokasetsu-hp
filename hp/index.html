@@ -111,7 +111,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 .section-lead{font-size:0.95rem;color:var(--text-dim);max-width:600px;line-height:2}
 
 /* ===== KUYO-MON ===== */
-.reason{position:relative;overflow:hidden;background:#eef4fa;height:100vh;min-height:700px;touch-action:none;}
+.reason{position:relative;overflow:hidden;background:#eef4fa;height:100vh;min-height:700px;touch-action:pan-y;}
 .reason__scaffold{display:none}
 
 .reason__header{position:absolute;top:40px;left:0;right:0;text-align:center;z-index:25;pointer-events:none;color:var(--text-dark)}
@@ -563,11 +563,6 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 .t-blob-main{font-size:calc(0.85rem * var(--ks))!important;}
 .t-label{font-size:calc(0.65rem * var(--ks))!important;}
 
-/* リサイズ中はposition/size関連のtransitionのみ無効化（animationは維持） */
-.is-resizing .kuyo-wrap,
-.is-resizing .kuyo-node{
-  transition:none!important;
-}
 </style>
 <script>
 // ===== KUYO RESPONSIVE SCALE =====
@@ -581,8 +576,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
     root.style.setProperty('--kw-half', (310 * s) + 'px');
     root.style.setProperty('--kn-size', (95 * s) + 'px');
   }
-  scaleKuyo();
-  /* scaleKuyoのresizeはupdate()に統合 */
+  /* scaleKuyoはupdate()に統合済み（呼び出し不要） */
 })();
 </script>
 </head>
@@ -1419,10 +1413,6 @@ document.addEventListener('DOMContentLoaded',function(){
 
   function update(){
     var W=window.innerWidth;
-    /* リサイズ中クラスを付与→transitionを一時無効 */
-    document.documentElement.classList.add('is-resizing');
-    clearTimeout(update._rt);
-    update._rt=setTimeout(function(){document.documentElement.classList.remove('is-resizing');},300);
     /* ★ H = window.innerHeight を直接使用
        reasonのCSS height:100vh = window.innerHeight
        → H/2 は常に reason の 50% と一致 → 家紋UIと地図がズレない */
