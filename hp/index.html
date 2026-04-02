@@ -1413,7 +1413,10 @@ document.addEventListener('DOMContentLoaded',function(){
   /* 地図サイズはupdate()で動的計算 */
 
   function update(){
-    var W=window.innerWidth,H=window.innerHeight;
+    var W=window.innerWidth;
+    /* iOSアドレスバー対策: reasonのoffsetHeightを使いwindow.innerHeightの変動を無視 */
+    var reasonEl=document.getElementById('reason');
+    var H=reasonEl ? reasonEl.offsetHeight : window.innerHeight;
     var s=Math.max(0.38,Math.min(1.15,W/REF_W));
     root.style.setProperty('--ks',s);
     root.style.setProperty('--kw-size',Math.round(620*s)+'px');
@@ -1442,7 +1445,12 @@ document.addEventListener('DOMContentLoaded',function(){
     map.style.transform = 'none';
   }
   update();
-  window.addEventListener('resize', update);
+  /* resizeにdebounce（アドレスバー変動による頻繁な再計算を防ぐ） */
+  var _resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(_resizeTimer);
+    _resizeTimer = setTimeout(update, 150);
+  });
   window.addEventListener('orientationchange', function(){ setTimeout(update, 300); });
   /* ② reason上のtouchでブラウザのズーム/スクロールをブロック */
   (function(){
