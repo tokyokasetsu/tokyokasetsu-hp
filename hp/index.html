@@ -562,6 +562,12 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 .t-blob-sub{font-size:calc(0.55rem * var(--ks))!important;}
 .t-blob-main{font-size:calc(0.85rem * var(--ks))!important;}
 .t-label{font-size:calc(0.65rem * var(--ks))!important;}
+
+/* リサイズ中はposition/size関連のtransitionのみ無効化（animationは維持） */
+.is-resizing .kuyo-wrap,
+.is-resizing .kuyo-node{
+  transition:none!important;
+}
 </style>
 <script>
 // ===== KUYO RESPONSIVE SCALE =====
@@ -576,7 +582,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
     root.style.setProperty('--kn-size', (95 * s) + 'px');
   }
   scaleKuyo();
-  window.addEventListener('resize', scaleKuyo);
+  /* scaleKuyoのresizeはupdate()に統合 */
 })();
 </script>
 </head>
@@ -1406,17 +1412,21 @@ document.addEventListener('DOMContentLoaded',function(){
 /* ===== 関東地図 × 家紋UI スケール ===== */
 (function(){
   var REF_W=1920,KANTO_RX=0.495,KANTO_RY=0.398;
-  /* MAP_W/MAP_HはupDateで動的計算 */
   var root=document.documentElement;
   var map=document.getElementById('japan-map');
-  if(!map) return;
-  /* 地図サイズはupdate()で動的計算 */
+  var reasonEl=document.getElementById('reason');
+  if(!map||!reasonEl) return;
 
   function update(){
     var W=window.innerWidth;
-    /* iOSアドレスバー対策: reasonのoffsetHeightを使いwindow.innerHeightの変動を無視 */
-    var reasonEl=document.getElementById('reason');
-    var H=reasonEl ? reasonEl.offsetHeight : window.innerHeight;
+    /* リサイズ中クラスを付与→transitionを一時無効 */
+    document.documentElement.classList.add('is-resizing');
+    clearTimeout(update._rt);
+    update._rt=setTimeout(function(){document.documentElement.classList.remove('is-resizing');},300);
+    /* ★ H = window.innerHeight を直接使用
+       reasonのCSS height:100vh = window.innerHeight
+       → H/2 は常に reason の 50% と一致 → 家紋UIと地図がズレない */
+    var H=window.innerHeight;
     var s=Math.max(0.38,Math.min(1.15,W/REF_W));
     root.style.setProperty('--ks',s);
     root.style.setProperty('--kw-size',Math.round(620*s)+'px');
@@ -1430,37 +1440,40 @@ document.addEventListener('DOMContentLoaded',function(){
     root.style.setProperty('--kr2',Math.round(200*s)+'px');
     root.style.setProperty('--kr3',Math.round(300*s)+'px');
     root.style.setProperty('--kr4',Math.round(420*s)+'px');
-    /* ★ 地図: 画面幅をカバー、かつ上端が見切れない最大スケール */
-    var mapS = W / 1100;                          /* 幅基準 */
-    var maxByTop = (H/2) / (1000 * KANTO_RY);    /* 上端が0になるスケール上限 */
-    mapS = Math.min(mapS, maxByTop);              /* 上端が見切れないよう制限 */
-    mapS = Math.max(mapS, 0.7);                   /* 最小値 */
-    var mW = Math.round(1100 * mapS);
-    var mH = Math.round(1000 * mapS);
-    map.style.width  = mW + 'px';
-    map.style.height = mH + 'px';
-    map.style.transformOrigin = Math.round(mW*KANTO_RX)+'px '+Math.round(mH*KANTO_RY)+'px';
-    map.style.left   = Math.round(W/2 - mW*KANTO_RX) + 'px';
-    map.style.top    = Math.round(H/2 - mH*KANTO_RY) + 'px';
-    map.style.transform = 'none';
+    var mapS=W/1100;
+    var maxByTop=(H/2)/(1000*KANTO_RY);
+    mapS=Math.min(mapS,maxByTop);
+    mapS=Math.max(mapS,0.7);
+    var mW=Math.round(1100*mapS);
+    var mH=Math.round(1000*mapS);
+    map.style.width=mW+'px';
+    map.style.height=mH+'px';
+    map.style.transformOrigin=Math.round(mW*KANTO_RX)+'px '+Math.round(mH*KANTO_RY)+'px';
+    map.style.left=Math.round(W/2-mW*KANTO_RX)+'px';
+    map.style.top=Math.round(H/2-mH*KANTO_RY)+'px';
+    map.style.transform='none';
   }
+
   update();
-  /* resizeにdebounce（アドレスバー変動による頻繁な再計算を防ぐ） */
-  var _resizeTimer;
-  window.addEventListener('resize', function(){
-    clearTimeout(_resizeTimer);
-    _resizeTimer = setTimeout(update, 150);
+
+  /* ★ debounceなし・即座にupdate（CSSとJSのタイムラグをゼロに） */
+  var _lastW=window.innerWidth;
+  window.addEventListener('resize',function(){
+    var newW=window.innerWidth;
+    if(Math.abs(newW-_lastW)<50) return; /* アドレスバー変動は無視 */
+    _lastW=newW;
+    update(); /* 即座に実行 */
   });
-  window.addEventListener('orientationchange', function(){ setTimeout(update, 300); });
-  /* ② reason上のtouchでブラウザのズーム/スクロールをブロック */
-  (function(){
-    var sec = document.getElementById('reason');
-    if(!sec) return;
-    /* reason内のtouchmoveを全部ブロック（1本指スワイプ・ピンチ両方） */
-    sec.addEventListener('touchmove', function(e){
-      e.preventDefault();
-    }, {passive:false});
-  })();
+
+  /* 画面回転 */
+  window.addEventListener('orientationchange',function(){
+    setTimeout(function(){ _lastW=window.innerWidth; update(); },400);
+  });
+
+  /* ピンチズームのみブロック */
+  reasonEl.addEventListener('touchstart',function(e){
+    if(e.touches.length>1) e.preventDefault();
+  },{passive:false});
 })();
 </script>
 
