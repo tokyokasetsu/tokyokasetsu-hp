@@ -111,7 +111,7 @@ button{border:none;background:none;cursor:pointer;font-family:inherit}
 .section-lead{font-size:0.95rem;color:var(--text-dim);max-width:600px;line-height:2}
 
 /* ===== KUYO-MON ===== */
-.reason{position:relative;overflow:hidden;background:#eef4fa;height:100vh;min-height:700px;touch-action:pan-y;}
+.reason{position:relative;overflow:hidden;background:#eef4fa;height:100vh;min-height:700px;touch-action:pan-y;}@supports(height:100svh){.reason{height:100svh;}}
 .reason__scaffold{display:none}
 
 .reason__header{position:absolute;top:40px;left:0;right:0;text-align:center;z-index:25;pointer-events:none;color:var(--text-dark)}
@@ -1416,7 +1416,7 @@ document.addEventListener('DOMContentLoaded',function(){
     /* ★ H = window.innerHeight を直接使用
        reasonのCSS height:100vh = window.innerHeight
        → H/2 は常に reason の 50% と一致 → 家紋UIと地図がズレない */
-    var H=window.innerHeight;
+    var H=reasonEl.getBoundingClientRect().height||window.innerHeight;
     var s=Math.max(0.38,Math.min(1.15,W/REF_W));
     root.style.setProperty('--ks',s);
     root.style.setProperty('--kw-size',Math.round(620*s)+'px');
